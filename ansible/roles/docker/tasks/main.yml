@@ -4,26 +4,47 @@
     update_cache: yes
     state: present
   tags: [docker]
-
-- name: Docker is present
+  
+# lxc-docker與docker-engine實在不同
+#- name: Docker is present
+#  apt:
+#    name: lxc-docker
+#    state: latest
+#    update_cache: yes
+#    force: yes
+#  tags: [docker]
+  
+- name: Debian Docker is present
   apt:
-    name: lxc-docker
+    name: docker-engine
     state: latest
-    update_cache: yes
     force: yes
   tags: [docker]
 
-- name: Python-pip is present
-  apt: name=python-pip state=present
+- name: Debian python-pip is present
+  apt:
+    name: python-pip
+    state: present
+    force: yes
   tags: [docker]
 
-- name: Docker-py is present
-  pip: name=docker-py version=0.4.0 state=present
+- name: Debian docker-py is present
+  pip:
+    name: docker-py
+    version: 1.6.0
+    state: present
+  tags: [docker]
+
+- name: Debian files are present
+  template:
+    src: "{{ docker_cfg }}"
+    dest: "{{ docker_cfg_dest }}"
+  register: copy_result
   tags: [docker]
 
 - name: Docker Compose is present
   get_url:
-    url: https://github.com/docker/compose/releases/download/1.3.2/docker-compose-Linux-x86_64
+    url: https://github.com/docker/compose/releases/download/1.8.0/docker-compose-Linux-x86_64
     dest: /usr/local/bin/docker-compose
   tags: [docker]
 
