@@ -1,5 +1,5 @@
 appDev:
-  image: 192.168.57.29:5000/books-fe-polymer-dev
+  image: 192.168.57.29:5000/books-fe-polymer-dev:v1
   volumes:
     - app:/app
   ports:
@@ -11,7 +11,7 @@ nginxDev:
   ports:
     - 8080:80
 booksServiceDev:
-  image: 192.168.57.29:5000/books-service
+  image: 192.168.57.29:5000/books-service:v1
   volumes:
     - /data/tests/db:/data/db
   ports:
